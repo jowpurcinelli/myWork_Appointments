@@ -1,12 +1,11 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useState } from 'react';
 
-import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
+import { FiLogIn, FiMail } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 
-import { useAuth } from '../../hooks/auth';
 import { useToast } from '../../hooks/toast';
 import logoImg from '../../assets/logo.svg';
 import Input from '../../components/Input';
@@ -14,40 +13,43 @@ import Button from '../../components/Button';
 import getValidationErrors from '../../utils/getValidationErros';
 
 import { Container, Content, AnimationContainer, Background } from './styles';
+import api from '../../services/api';
 
-interface SignInFormData {
+interface ForgotPasswordFormData {
   email: string;
-  password: string;
 }
 
-const SignIn: React.FC = () => {
+const ForgotPassword: React.FC = () => {
+  const [loading, setLoading] = useState<boolean>(false);
   const formRef = useRef<FormHandles>(null);
-  const history = useHistory();
 
-  const { signIn } = useAuth();
   const { addToast } = useToast();
 
   const handleSubmit = useCallback(
-    async (data: SignInFormData) => {
+    async (data: ForgotPasswordFormData) => {
       try {
+        setLoading(true);
         formRef.current?.setErrors({});
         const schema = Yup.object().shape({
           email: Yup.string()
             .email('Insert a valid e-mail')
-            .required('E-mail is required'),
-          password: Yup.string().required('Password is required'),
+            .required('Email required'),
         });
 
         await schema.validate(data, {
           abortEarly: false,
         });
 
-        await signIn({
+        await api.post('/password/forgot', {
           email: data.email,
-          password: data.password,
         });
 
-        history.push('/dashboard');
+        addToast({
+          type: 'success',
+          title: 'Recover e-mail sent',
+          description:
+            'We sent you a e-mail with instruction for recovering your password',
+        });
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
@@ -59,13 +61,15 @@ const SignIn: React.FC = () => {
 
         addToast({
           type: 'error',
-          title: 'Authentication error',
-          description:
-            'An error ocurred while trying to login, please check your credentials!',
+          title: 'Error while recovering your password',
+          description: 'An error ocurred while recovering your password',
         });
+      } finally {
+        formRef.current?.setFieldValue('email', '');
+        setLoading(false);
       }
     },
-    [signIn, addToast, history],
+    [addToast],
   );
 
   return (
@@ -74,27 +78,22 @@ const SignIn: React.FC = () => {
         <AnimationContainer>
           <img src={logoImg} alt="logo" />
           <Form ref={formRef} onSubmit={handleSubmit}>
-            <h1>Login!</h1>
+            <h1>Recover password</h1>
             <Input
               name="email"
               icon={FiMail}
               type="email"
               placeholder="E-mail"
             />
-            <Input
-              name="password"
-              icon={FiLock}
-              type="password"
-              placeholder="Password"
-            />
-            <Button type="submit">Get in!</Button>
 
-            <Link to="/forgot">I am dumb and forgot my password</Link>
+            <Button isLoading={loading} type="submit">
+              Recover
+            </Button>
           </Form>
 
-          <Link to="/signup">
+          <Link to="/">
             <FiLogIn />
-            Create account
+            Go back to Login
           </Link>
         </AnimationContainer>
       </Content>
@@ -102,4 +101,4 @@ const SignIn: React.FC = () => {
     </Container>
   );
 };
-export default SignIn;
+export default ForgotPassword;
