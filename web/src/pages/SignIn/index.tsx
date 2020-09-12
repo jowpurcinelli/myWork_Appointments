@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useContext } from 'react';
 
 import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
 import { Form } from '@unform/web';
@@ -22,7 +22,7 @@ interface SignInFormData {
 }
 
 const SignIn: React.FC = () => {
-  const { logo } = useContex(ThemeContext);
+  const { logo } = useContext(ThemeContext);
 
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();

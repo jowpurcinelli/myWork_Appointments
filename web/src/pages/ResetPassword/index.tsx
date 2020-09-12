@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useContext } from 'react';
 
 import { FiLock } from 'react-icons/fi';
 import { Form } from '@unform/web';
@@ -18,7 +18,7 @@ import api from '../../services/api';
 
 interface ResetPasswordFormData {
   password: string;
-  passwordConfirmation: string;
+  password_confirmation: string;
 }
 
 const ResetPassword: React.FC = () => {
@@ -38,8 +38,8 @@ const ResetPassword: React.FC = () => {
 
         const schema = Yup.object().shape({
           password: Yup.string().required('Password required'),
-          passwordConfirmation: Yup.string().oneOf(
-            [Yup.ref('password')],
+          password_confirmation: Yup.string().oneOf(
+            [Yup.ref('password'), null ],
             'Different Passwords',
           ),
         });
@@ -50,7 +50,7 @@ const ResetPassword: React.FC = () => {
 
         const { password, password_confirmation } = data
 
-        const { token } = location.search.replace('?token=', ' ')
+        const token  = location.search.replace('?token=', ' ')
 
         if (!token) {
           throw new Error();
@@ -99,7 +99,7 @@ const ResetPassword: React.FC = () => {
               placeholder="New password"
             />
             <Input
-              name="passwordConfirmation"
+              name="password_confirmation"
               icon={FiLock}
               type="password"
               placeholder="New password confirmation"

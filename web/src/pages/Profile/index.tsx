@@ -172,8 +172,9 @@ const Profile: React.FC = () => {
           <Input name="name" icon={FiUser} type="text" placeholder="Name" />
           <Input name="email" icon={FiMail} type="email" placeholder="E-mail" />
           
+        
           <Input
-            containerStyle={{ marginTop: 24 }}
+
             name="oldPassword"
             icon={FiLock}
             type="password"
@@ -191,6 +192,7 @@ const Profile: React.FC = () => {
             type="password"
             placeholder="Confirm your new password"
           />
+          
           <Button type="submit">Confirm changes</Button>
         </Form>
       </Content>
@@ -198,3 +200,5 @@ const Profile: React.FC = () => {
   );
 };
 export default Profile;
+
+  /*            containerStyle={ { marginTop: 24 } } */
