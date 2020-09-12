@@ -8,7 +8,7 @@ import queryString from 'query-string';
 import * as Yup from 'yup';
 
 import { useToast } from '../../hooks/toast';
-import logoImg from '../../assets/logo.svg';
+import { ThemeContext } from 'styled-components';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import getValidationErrors from '../../utils/getValidationErros';
@@ -22,6 +22,9 @@ interface ResetPasswordFormData {
 }
 
 const ResetPassword: React.FC = () => {
+  const { logo } = useContext(ThemeContext)
+
+
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
   const location = useLocation();
@@ -32,6 +35,7 @@ const ResetPassword: React.FC = () => {
     async (data: ResetPasswordFormData) => {
       try {
         formRef.current?.setErrors({});
+
         const schema = Yup.object().shape({
           password: Yup.string().required('Password required'),
           passwordConfirmation: Yup.string().oneOf(
@@ -44,16 +48,18 @@ const ResetPassword: React.FC = () => {
           abortEarly: false,
         });
 
-        const { token } = queryString.parse(location.search);
+        const { password, password_confirmation } = data
+
+        const { token } = location.search.replace('?token=', ' ')
 
         if (!token) {
           throw new Error();
-        }
+        };
 
-        // Doesn't make sense to await this action
-        api.post('/password/reset', {
-          password: data.password,
-          passwordConfirmation: data.passwordConfirmation,
+
+        await api.post('/password/reset', {
+          password,
+          password_confirmation,
           token,
         });
 
@@ -69,7 +75,7 @@ const ResetPassword: React.FC = () => {
 
         addToast({
           type: 'error',
-          title: 'Erro ao resetar senha',
+          title: 'Error reseting passwd',
           description: 'An error ocurred while reseting your password, please try again ',
         });
       }
@@ -81,9 +87,11 @@ const ResetPassword: React.FC = () => {
     <Container>
       <Content>
         <AnimationContainer>
-          <img src={logoImg} alt="logo" />
+          <img src={ logo } alt="logo" />
+          
           <Form ref={formRef} onSubmit={handleSubmit}>
             <h1>Reset password</h1>
+            
             <Input
               name="password"
               icon={FiLock}

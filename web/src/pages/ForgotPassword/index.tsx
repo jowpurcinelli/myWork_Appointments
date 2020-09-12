@@ -7,20 +7,29 @@ import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import { useToast } from '../../hooks/toast';
-import logoImg from '../../assets/logo.svg';
+import getValidationErrors from '../../utils/getValidationErrors';
+
+
+import { ThemeContext } from 'styled-components';
+
+
+
 import Input from '../../components/Input';
 import Button from '../../components/Button';
-import getValidationErrors from '../../utils/getValidationErros';
 
 import { Container, Content, AnimationContainer, Background } from './styles';
 import api from '../../services/api';
 
 interface ForgotPasswordFormData {
   email: string;
+  password: string
 }
 
 const ForgotPassword: React.FC = () => {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
+  
+  const { logo } = useContext ( ThemeContext )
+  
   const formRef = useRef<FormHandles>(null);
 
   const { addToast } = useToast();
@@ -28,8 +37,10 @@ const ForgotPassword: React.FC = () => {
   const handleSubmit = useCallback(
     async (data: ForgotPasswordFormData) => {
       try {
-        setLoading(true);
-        formRef.current?.setErrors({});
+        setLoading(true)
+
+        formRef.current?.setErrors({})
+
         const schema = Yup.object().shape({
           email: Yup.string()
             .email('Insert a valid e-mail')
@@ -48,8 +59,9 @@ const ForgotPassword: React.FC = () => {
           type: 'success',
           title: 'Recover e-mail sent',
           description:
-            'We sent you a e-mail with instruction for recovering your password',
-        });
+            'We sent you an e-mail with instruction for recovering your password',
+        })
+
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
@@ -63,9 +75,8 @@ const ForgotPassword: React.FC = () => {
           type: 'error',
           title: 'Error while recovering your password',
           description: 'An error ocurred while recovering your password',
-        });
+        })
       } finally {
-        formRef.current?.setFieldValue('email', '');
         setLoading(false);
       }
     },
@@ -76,7 +87,7 @@ const ForgotPassword: React.FC = () => {
     <Container>
       <Content>
         <AnimationContainer>
-          <img src={logoImg} alt="logo" />
+          <img src={ logo } alt="logo" />
           <Form ref={formRef} onSubmit={handleSubmit}>
             <h1>Recover password</h1>
             <Input
