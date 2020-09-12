@@ -1,15 +1,8 @@
 import React, 
-{ 
-    createContext,
-    useCallback,
-    useState,
-    useContext
-}
-        from 'react';
-
+{ createContext, useCallback, useState, useContext} from 'react';
 import api from '../services/api';
 
-// this api will be requested later, using a different database that will be provided
+// this api will be requested using a database that will be provided later...
 
 interface User {
   id: string;
@@ -48,7 +41,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       return { token, user: JSON.parse(user) };
     }
 
-    return {} as AuthState;
+    return { } as AuthState;
   });
 
   const signIn = useCallback(async ({ email, password }) => {
@@ -59,8 +52,8 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     const { token, user } = response.data;
 
-    localStorage.setItem('@MyWork:token', token);
-    localStorage.setItem('@MyWork:user', JSON.stringify(user));
+    localStorage.setItem('@MyWork : token', token);
+    localStorage.setItem('@MyWork : user', JSON.stringify(user));
 
     api.defaults.headers.authorization = `Bearer ${token}`;
 

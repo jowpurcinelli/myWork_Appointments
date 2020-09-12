@@ -110,28 +110,31 @@ const Profile: React.FC = () => {
   );
 
   const handleAvatarChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      if (event.target.files) {
-        const data = new FormData();
+    (e: ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files) {
+        const data = new FormData()
 
-        data.append('avatar', event.target.files[0]);
+        data.append('avatar', e.target.files[0])
 
         api
           .patch('/users/avatar', data)
           .then((response) => {
-            updateUser(response.data);
+            updateUser(response.data)
 
             addToast({
               type: 'success',
               title: 'Avatar updated sucssesfully',
-            });
+            })
           })
+          // Unnecessary?
+          /*
           .catch(() => {
             addToast({
               type: 'error',
               title: 'Error changing avatar',
             });
           });
+          */
       }
     },
     [addToast, updateUser],
@@ -139,20 +142,21 @@ const Profile: React.FC = () => {
 
   return (
     <Container>
-      <Header>
+      <header>
         <div>
           <Link to="/dashboard">
             <FiArrowLeft />
           </Link>
         </div>
-      </Header>
+      </header>
+
       <Content>
         <Form
-          initialData={{
+          ref = {formRef}
+          initialData = {{
             name: user.name,
             email: user.email,
           }}
-          ref={formRef}
           onSubmit={handleSubmit}
         >
           <AvatarInput>
@@ -162,11 +166,14 @@ const Profile: React.FC = () => {
               <input type="file" id="avatar" onChange={handleAvatarChange} />
             </label>
           </AvatarInput>
+
           <h1>My profile</h1>
 
           <Input name="name" icon={FiUser} type="text" placeholder="Name" />
           <Input name="email" icon={FiMail} type="email" placeholder="E-mail" />
+          
           <Input
+            containerStyle={{ marginTop: 24 }}
             name="oldPassword"
             icon={FiLock}
             type="password"

@@ -1,27 +1,24 @@
 import React, { useCallback, useRef } from 'react';
-
 import { FiArrowLeft, FiMail, FiLock, FiUser } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 import { Link, useHistory } from 'react-router-dom';
-import logoImg from '../../assets/logo.svg';
-import Input from '../../components/Input';
-import Button from '../../components/Button';
-import { useToast } from '../../hooks/toast';
-
-import getValidationErrors from '../../utils/getValidationErros';
+import { ThemeContext } from 'styled-components';
 import api from '../../services/api';
 
-import 
-{
-     Container, 
-     Content, 
-     AnimationContainer, 
-     Background
-     }
-      from './styles';
+//Hook
+import { useToast } from '../../hooks/toast';
 
+//Toast
+import getValidationErrors from '../../utils/getValidationErros';
+
+//Components
+import Input from '../../components/Input';
+import Button from '../../components/Button';
+
+import { Container,  Content,  AnimationContainer,  Background } from './styles';
+import { useContext } from 'react';
 
 interface SignUpFormData {
   name: string;
@@ -30,14 +27,17 @@ interface SignUpFormData {
 }
 
 const SignUp: React.FC = () => {
+  const { logo } = useContext( ThemeContext )
+  
   const formRef = useRef<FormHandles>(null);
-  const { addToast } = useToast();
-  const history = useHistory();
+  const { addToast } = useToast( );
+  const history = useHistory( );
 
   const handleSubmit = useCallback(
     async (data: SignUpFormData) => {
       try {
-        formRef.current?.setErrors({});
+        formRef.current?.setErrors({ });
+
         const schema = Yup.object().shape({
           name: Yup.string().required('Name required'),
           email: Yup.string()
@@ -52,26 +52,31 @@ const SignUp: React.FC = () => {
 
         await api.post('/users', data);
 
+        history.push( '/' )
+
         addToast({
           type: 'success',
           title: 'Registration completed.',
           description: 'Now you can logIn!',
-        });
+        })
 
-        history.push('/');
       } catch (err) {
-        const errors = getValidationErrors(err);
+        if (err instanceof Yup.ValidationError) {
+        const errors = getValidationErrors(err)
 
         formRef.current?.setErrors(errors);
+
+        return
+        }
 
         addToast({
           type: 'error',
           title: 'Registration Error ',
           description: 'An error ocurred while doing your registration, please try again',
-        });
+        })
       }
     },
-    [addToast, history],
+    [ addToast, history ],
   );
 
   return (
@@ -79,7 +84,8 @@ const SignUp: React.FC = () => {
       <Background />
       <Content>
         <AnimationContainer>
-          <img src={logoImg} alt="logo" />
+          <img src={ logo } alt="logo" />
+          
           <Form ref={formRef} onSubmit={handleSubmit}>
             <h1>Sign Up</h1>
             <Input name="name" icon={FiUser} type="text" placeholder="Name" />
