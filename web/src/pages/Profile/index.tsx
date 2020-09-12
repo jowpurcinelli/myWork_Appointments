@@ -10,10 +10,10 @@ import Button from '../../components/Button';
 import { useToast } from '../../hooks/toast';
 import { useAuth } from '../../hooks/auth';
 
-import getValidationErrors from '../../utils/getValidationErros';
+import getValidationErrors from '../../utils/getValidationErrors';
 import api from '../../services/api';
 
-import { Container, Header, Content, AvatarInput } from './styles';
+import { Container,  Content, AvatarInput } from './styles';
 
 interface ProfileFormData {
   name: string;
