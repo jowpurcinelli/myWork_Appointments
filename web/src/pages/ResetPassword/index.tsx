@@ -11,7 +11,7 @@ import { useToast } from '../../hooks/toast';
 import { ThemeContext } from 'styled-components';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
-import getValidationErrors from '../../utils/getValidationErros';
+import getValidationErrors from '../../utils/getValidationErrors';
 
 import { Container, Content, AnimationContainer, Background } from './styles';
 import api from '../../services/api';

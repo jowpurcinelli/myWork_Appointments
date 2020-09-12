@@ -11,7 +11,7 @@ import api from '../../services/api';
 import { useToast } from '../../hooks/toast';
 
 //Toast
-import getValidationErrors from '../../utils/getValidationErros';
+import getValidationErrors from '../../utils/getValidationErrors';
 
 //Components
 import Input from '../../components/Input';
