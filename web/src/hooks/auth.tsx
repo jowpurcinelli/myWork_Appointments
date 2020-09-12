@@ -9,6 +9,8 @@ import React,
 
 import api from '../services/api';
 
+// this api will be requested later, using a different database that will be provided
+
 interface User {
   id: string;
   name: string;
