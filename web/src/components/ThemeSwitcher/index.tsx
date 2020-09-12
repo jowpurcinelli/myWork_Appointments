@@ -14,7 +14,7 @@ const ThemeSwitcher : React.FC<Props> = ({ toggleTheme }) => {
     return (
         <Container>
             <Switch
-                onchange = { toggleTheme }
+                onChange = { toggleTheme }
                 checkedIcon = { false }
                 uncheckedIcon = { false }
                 checked = { title === 'dark' }
