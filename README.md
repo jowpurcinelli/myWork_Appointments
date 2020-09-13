@@ -1,7 +1,13 @@
-# myWork_Appointment
+<h1 align="center"> myWork_Appointment </h1>
 
 
-## Under development
+` Under development`
+
+## 💻 Project
+`myWork Appointment` Is a shceduling and admin control platform where costumers can make an appointment and the work providers can organize the day schedule
+
+
+
 
 ## :rocket: Tecnologies
 
@@ -34,5 +40,13 @@
 ✔️Axios
 
 
-## 💻 Project
-`myWork Appointment` Is a shceduling and admin control platform where costumers can make an appointment and the work providers can organize the day schedule
+
+## ⚙ Configuration
+
+1- First, install the dependencies:
+> yarn
+
+2- To initiate the aplication:
+> yarn start
+
+
