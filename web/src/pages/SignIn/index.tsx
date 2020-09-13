@@ -80,7 +80,7 @@ const SignIn: React.FC = () => {
           <img src={ logo } alt="logo" />
           
           <Form ref={formRef} onSubmit={handleSubmit}>
-            <h1>Login!</h1>
+            <h1>LogIn!</h1>
             
             <Input
               name="email"

@@ -167,14 +167,14 @@ const Dashboard: React.FC = () => {
           <h1>Appointments</h1>
 
           <p>
-            {isToday(selectedDate) && <span>Hoje</span>}
+            {isToday(selectedDate) && <span>Today</span>}
             <span>{selectedDateAsText}</span>
             <span>{selectedWeekDay}</span>
           </p>
 
           {isToday(selectedDate) && nextAppointment && (
             <NextAppointment>
-              <strong>Next appointmen</strong>
+              <strong>Next appointment</strong>
               <div>
                 <img
                   src={nextAppointment.user.avatar_url}
@@ -241,7 +241,7 @@ const Dashboard: React.FC = () => {
         </Schedule>
         <Calendar>
           <DayPicker
-            weekdaysShort={['SU', 'M', 'T', 'W', 'T', 'F', 'S']}
+            weekdaysShort={['D', 'S', 'T', 'Q', 'Q', 'S', 'S']}
             fromMonth={new Date()}
             disabledDays={[{ daysOfWeek: [0, 6] }, ...disableDays]}
             modifiers={{
@@ -251,18 +251,18 @@ const Dashboard: React.FC = () => {
             selectedDays={selectedDate}
             onDayClick={handleDateChange}
             months={[
-              'January',
-              'February',
-              'March',
-              'April',
-              'May',
-              'June',
-              'July',
-              'August',
-              'September',
-              'October',
-              'November',
-              'December',
+              'Janeiro',
+              'Fevereiro',
+              'Março',
+              'Abril',
+              'Maio',
+              'Junho',
+              'Julho',
+              'Agosto',
+              'Setembro',
+              'Outubro',
+              'Novembro',
+              'Dezembro',
             ]}
           />
         </Calendar>

@@ -15,7 +15,7 @@ export const Content = styled.div`
   justify-content: center;
   flex-direction: column;
   width: 100%;
-  max-width: 700px;
+  max-width: 600px;
 `;
 
 const appearFromRight = keyframes`
@@ -35,10 +35,11 @@ export const AnimationContainer = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  animation: ${appearFromRight} 1s;
+  animation: ${appearFromRight} 1.5s;
 
   form {
-    margin: 80px 0;
+    padding-bottom: 100px;
+    margin: 0px 0;
     width: 340px;
     text-align: center;
 
@@ -47,9 +48,10 @@ export const AnimationContainer = styled.div`
     }
 
     a {
+      
       color: #f4ede8;
       display: block;
-      margin-top: 24px;
+      margin-top: 14px;
       text-decoration: none;
       transition: color 0.2s;
 
