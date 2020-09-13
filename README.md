@@ -6,7 +6,10 @@
 ` Under development`
 
 ## 💻 Project
-`myWork Appointment` Is a shceduling and admin control platform where costumers can make an appointment and the work providers can organize the day schedule
+`myWork Appointment` Is a shceduling and admin control platform where costumers can make an appointment inside a platform where workers, job providers can organize the day schedule. 
+This in an autoral app starting from the bottom. 
+The idea is to develop the web, mobile and back-end platforms. Where the users can find the workers, schedule an appointment, and well... I am open to new ideas 
+
 
 
 
