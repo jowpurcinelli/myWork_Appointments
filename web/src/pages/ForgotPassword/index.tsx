@@ -1,5 +1,4 @@
 import React, { useRef, useCallback, useContext, useState } from 'react';
-
 import { FiLogIn, FiMail } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
@@ -9,10 +8,7 @@ import * as Yup from 'yup';
 import { useToast } from '../../hooks/toast';
 import getValidationErrors from '../../utils/getValidationErrors';
 
-
 import { ThemeContext } from 'styled-components';
-
-
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';

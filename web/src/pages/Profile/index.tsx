@@ -27,9 +27,7 @@ const Profile: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const { addToast } = useToast();
   const history = useHistory();
-
   const { user, updateUser } = useAuth();
-
   const handleSubmit = useCallback(
     async (data: ProfileFormData) => {
       try {
